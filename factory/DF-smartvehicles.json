@@ -1,0 +1,9 @@
+{
+	"name": "DF-smartvehicles",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "0d86ae67-ed57-4400-bc3e-a91dfa01fe62",
+		"tenantId": "ff501040-ab1c-4680-a880-074f6b3a7b97"
+	}
+}

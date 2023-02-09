@@ -1,0 +1,50 @@
+{
+	"name": "DS_s3_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_AmzS3",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"ds_param_folderPath": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AmazonS3Location",
+				"bucketName": "azures3bucket",
+				"folderPath": {
+					"value": "@dataset().ds_param_folderPath",
+					"type": "Expression"
+				}
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"VehicleID": {
+					"type": "string"
+				},
+				"latitiude": {
+					"type": "number"
+				},
+				"longitude": {
+					"type": "number"
+				},
+				"City": {
+					"type": "string"
+				},
+				"temeprature": {
+					"type": "integer"
+				},
+				"speed": {
+					"type": "integer"
+				}
+			}
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,71 @@
+{
+	"name": "PL_ingest_s3_adls",
+	"properties": {
+		"activities": [
+			{
+				"name": "copy_customerjson",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "JsonSource",
+						"storeSettings": {
+							"type": "AmazonS3ReadSettings",
+							"recursive": true,
+							"wildcardFileName": "*.json",
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "JsonReadSettings"
+						}
+					},
+					"sink": {
+						"type": "JsonSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "JsonWriteSettings"
+						}
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "DS_s3_json",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_param_folderPath": {
+								"value": "@concat(formatDateTime(utcnow(), 'yyyy'), '/',\nformatDateTime(utcnow(), 'MM'), '/',formatDateTime(utcnow(),'dd'))",
+								"type": "Expression"
+							}
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "DS_Sink_ADLS_input",
+						"type": "DatasetReference",
+						"parameters": {
+							"ds_param_landing_dir": {
+								"value": "@concat('landing-', formatDateTime(utcnow(), 'yyyy'), '/',\nformatDateTime(utcnow(), 'MM'), '/',formatDateTime(utcnow(),'dd'))",
+								"type": "Expression"
+							}
+						}
+					}
+				]
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2023-02-08T08:43:13Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
